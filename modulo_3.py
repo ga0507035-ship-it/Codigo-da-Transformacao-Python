@@ -1,5 +1,5 @@
 
-print("=== Bem-vindo à Calculadora Python ===")
+print("=== Bem-vindo à Calculadora Simples ===")
 
 while True:
     print("\nOperações disponíveis:")
@@ -14,7 +14,7 @@ while True:
 
     if operacao == 'S':
         print("Encerrando a calculadora... Até logo!")
-        break  # Estrutura de repetição: interrompe o loop
+        break 
 
     if operacao in ('+', '-', '*', '/'):
         try:
