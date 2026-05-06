@@ -11,7 +11,7 @@ while True:
 
    
     operacao = input("\nEscolha a operação: ").strip().upper()
-
+    
     if operacao == 'S':
         print("Encerrando a calculadora... Até logo!")
         break 
