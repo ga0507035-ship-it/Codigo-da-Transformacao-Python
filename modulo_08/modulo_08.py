@@ -1,109 +1,42 @@
-print("--- Escrevendo no arquivo TXT ---")
-with open("dados_simples.txt", "w", encoding="utf-8") as arquivo_txt:
-    arquivo_txt.write("Linha 1: Introdução à manipulação de arquivos.\n")
-    arquivo_txt.write("Linha 2: Este é um exemplo de armazenamento simples.\n")
-    arquivo_txt.write("Linha 3: Fim do arquivo de texto.\n")
-print("Dados gravados com sucesso!\n")
+class Carro:
+    def __init__(self, marca: str, modelo: str):
+        self.marca = marca
+        self.modelo = modelo
+
+    def exibir_info(self):
+        """Imprime as informações básicas do veículo."""
+        print(f"Carro: {self.marca} {self.modelo}")
+
+    def __str__(self):
+        """Retorna uma representação em texto personalizada do objeto."""
+        return f"{self.marca} {self.modelo}"
 
 
-print("--- Lendo do arquivo TXT ---")
-with open("dados_simples.txt", "r", encoding="utf-8") as arquivo_txt:
-    conteudo = arquivo_txt.read()
-    print(conteudo)
-    
+# Implementando a Herança (Atividade 2)
+class CarroEletrico(Carro):
+    def __init__(self, marca: str, modelo: str, autonomia_bateria: int):
+        # O super() puxa os atributos da classe mãe (Carro)
+        super().__init__(marca, modelo)
+        self.autonomia_bateria = autonomia_bateria  # Atributo exclusivo
 
-import json
+    def exibir_info(self):
+        """Sobrescreve o método para incluir a autonomia da bateria."""
+        print(f"Carro Elétrico: {self.marca} {self.modelo} | Autonomia: {self.autonomia_bateria}km")
 
-clientes_dict = {
-    "cliente_1": {
-        "nome": "Ivan Paulino",
-        "email": "Ivan.paulino@email.com",
-        "ativo": True
-    },
-    "cliente_2": {
-        "nome": " Daniel Freitas",
-        "email": "Daniel.freitas@email.com",
-        "ativo": False
-    }
-}
+    def __str__(self):
+        """Retorna a representação em texto do carro elétrico."""
+        return f"{self.marca} {self.modelo} (Elétrico) - {self.autonomia_bateria}km de autonomia"
 
 
-print("--- Salvando dados em JSON ---")
-with open("clientes.json", "w", encoding="utf-8") as arquivo_json:
-  
-    json.dump(clientes_dict, arquivo_json, indent=4, ensure_ascii=False)
-print("Dicionário de clientes salvo com sucesso!\n")
+# --- TESTANDO AS CLASSES 1, 2 e 3 ---
+if __name__ == "__main__":
+    print("--- Teste de Carros ---")
+    # Criando um carro normal
+    meu_carro = Carro("Toyota", "Corolla")
+    meu_carro.exibir_info()
+    print(f"Usando o __str__: {meu_carro}\n")
 
-
-print("--- Carregando dados do JSON ---")
-with open("clientes.json", "r", encoding="utf-8") as arquivo_json:
-    dados_carregados = json.load(arquivo_json)
-    
-    for chave, info in dados_carregados.items():
-        print(f"ID: {chave}")
-        print(f"  Nome: {info['nome']}")
-        print(f"  E-mail: {info['email']}")
-        print(f"  Status: {'Ativo' if info['ativo'] else 'Inativo'}")
-
-
-import csv
-
-
-notas_alunos = [
-    ["Nome", "Disciplina", "Nota"],
-    ["Mariana", "Matemática", "18.5"],
-    ["Pedro", "Física", "14.0"],
-    ["Joana", "Química", "16.2"]
-]
-
-
-print("--- Gravando notas em CSV ---")
-
-with open("notas_sistema.csv", "w", newline="", encoding="utf-8") as arquivo_csv:
-    escritor_csv = csv.writer(arquivo_csv, delimiter=";")
-    escritor_csv.writerows(notas_alunos)
-print("Ficheiro CSV gerado com sucesso!\n")
-
-print("--- Lendo notas do CSV ---")
-with open("notas_sistema.csv", "r", encoding="utf-8") as arquivo_csv:
-    leitor_csv = csv.reader(arquivo_csv, delimiter=";")
-    
-    for linha in leitor_csv:
-        print(f"Aluno: {linha[0]:<10} | Disciplina: {linha[1]:<12} | Nota: {linha[2]}")
-
-    import os
-import shutil
-
-
-pasta_origem = "documentos_importantes"
-pasta_backup = "backup_sistema"
-
-if not os.path.exists(pasta_origem):
-    os.makedirs(pasta_origem)
-    # Cria um ficheiro fictício dentro da origem para teste
-    with open(os.path.join(pasta_origem, "relatorio.txt"), "w") as f:
-        f.write("Dados cruciais de backup.")
-    print(f"Pasta '{pasta_origem}' criada para testes.")
-
-if not os.path.exists(pasta_backup):
-    os.makedirs(pasta_backup)
-
-print("\n--- Iniciando Backup Automático ---")
-try:
-    ficheiros = os.listdir(pasta_origem)
-    
-    if not ficheiros:
-        print("A pasta de origem está vazia. Nenhum arquivo para copiar.")
-    else:
-        for item in ficheiros:
-            caminho_completo_origem = os.path.join(pasta_origem, item)
-            caminho_completo_destino = os.path.join(pasta_backup, item)
-            
-            if os.path.isfile(caminho_completo_origem):
-                shutil.copy2(caminho_completo_origem, caminho_completo_destino)
-                print(f"Copiado: {item} -> {pasta_backup}/")
-                
-        print("\n[SUCESSO] Backup concluído de forma automática!")
-
-except Exception as e:
-    print(f"[ERRO] Ocorreu uma falha ao realizar o backup: {e}")
+    # Criando um carro elétrico
+    meu_eletrico = CarroEletrico("BYD", "Dolphin", 400)
+    meu_eletrico.exibir_info()
+    print(f"Usando o __str__: {meu_eletrico}\n")
